@@ -1,0 +1,56 @@
+<%= render 'layouts/error_messages', resource: @book %>
+<div class="row">
+	<div class="col-xs-3">
+
+		<h2>User info</h2>
+		<%= render 'users/profile', user: current_user %>
+
+		<h2>New book</h2>
+		<%= render 'books/newform', book: @book %>
+
+	</div>
+
+	<div class="col-xs-9">
+		<h2>Books index</h2>
+		<!--books一覧 -->
+		<table class="table table-hover table-inverse">
+			<thead>
+				<tr>
+					<th></th>
+					<th>Title</th>
+					<th>Opinion</th>
+					<th colspan="3"></th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<% @books.each do |book| %>
+				<tr>
+					<td>
+						<%= link_to user_path(book.user) do %>
+						<%= attachment_image_tag(book.user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %>
+						<% end %>
+					</td>
+					<td><%= link_to book.title, book_path(book), class: "book_#{book.id}" %></td>
+					<td><%= book.body %></td>
+					<!-- いいね機能 -->
+          <td>
+            <% if book.favorited_by?(current_user) %>
+              <%= link_to book_favorites_path(book), method: :delete do %>
+                <span class="glyphicon glyphicon-heart"><%= book.favorites.count%></span>
+              <% end %>
+            <% else %>
+              <%= link_to book_favorites_path(book), method: :post do %>
+                <span class="glyphicon glyphicon-heart-empty"><%= book.favorites.count %></span>
+              <% end %>
+            <% end %>
+          </td>
+					<!-- いいね機能 -->
+          <td>コメント数：<%= book.book_comments.count %></td>
+				</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<!--books一覧 -->
+	</div>
+</div>

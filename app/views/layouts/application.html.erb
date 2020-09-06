@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers2</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <!--ヘッダーの記述-->
+    <<header class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+
+        <nav class="nav navbar-nav navbar-left">
+          <span>Bookers</span>
+        </nav>
+        <nav>
+          <ul class="nav navbar-nav navbar-right">
+            <!--if文でサインインとアウト時の表示を変更-->
+            <% if user_signed_in? %>
+            <li><%= link_to 'Home', user_path(current_user), class: 'glyphicon glyphicon-home home' %></li>
+            <li><%= link_to 'Users', users_path, class: 'glyphicon glyphicon-user users' %></li>
+            <li><%= link_to 'Books', books_path, class: 'glyphicon glyphicon-book books' %></li>
+            <li><%= link_to 'logout', destroy_user_session_path, method: :delete, class: 'glyphicon glyphicon-log-out logout' %></li>
+            <% else %>
+            <li><%= link_to 'Home', root_path, class: 'glyphicon glyphicon-home home' %></li>
+            <li><%= link_to 'About', home_about_path, class: 'glyphicon glyphicon-link about' %></li>
+            <li><%= link_to 'sign up', new_user_registration_path, class: 'glyphicon glyphicon-edit sign_up' %></li>
+            <li><%= link_to 'login', new_user_session_path, class: 'glyphicon glyphicon-log-in sign_in' %></li>
+            <% end %>
+          </ul>
+        </nav>
+
+      </div>
+    </header>
+    <div class="container">
+      <p id="notice"><%= notice %></p>
+
+
+
+<%= form_tag(search_path, :method => 'get') do %>
+<%= select_tag(:option, options_for_select([["user", "1"],["book","2"]]))%>
+<%= select_tag(:choice, options_for_select([["あいまい検索", "1" ],["後方一致検索", "2" ],["前方一致検索", "3" ],["完全一致検索", "4" ]])) %>
+<%= text_field_tag :search %>
+<%= submit_tag 'Search', :name => nil %>
+<% end %>
+
+      <%= yield %>
+    </div>
+  </body>
+</html>
