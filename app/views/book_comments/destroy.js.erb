@@ -1,0 +1,2 @@
+$("#text_area").val('');
+$("#comments_area").html("<%= escape_javascript(render 'comments_index', book_comments: @book_comments, book: @book) %>");
