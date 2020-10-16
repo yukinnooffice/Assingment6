@@ -1,5 +1,5 @@
 # Assingment6
-#DMMWEBCAMPのカリキュラム　２ヶ月目 非同期実装👩‍💻🏅
+#DMMWEBCAMPのカリキュラム　２ヶ月目 非同期実装🔨💻🏅
 
 
 ##環境 ruby 2.5.7
